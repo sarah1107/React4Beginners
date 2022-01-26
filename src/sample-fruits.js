@@ -31,7 +31,7 @@ const fruits = {
     name: "Strawberry",
     image: "/images/strawberry.jpg",
     desc:
-      "Strawberries are soft, sweet, bright red berries. ... Strawberries have tiny edible seeds, which grow all over their surface. When ripe, strawberries smell wonderful and taste even better.",
+      "Strawberries are soft, sweet, bright red berries. ... they smell wonderful and taste even better.",
     price: 1129,
     status: "available"
   },

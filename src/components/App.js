@@ -9,6 +9,8 @@ import sampleFruits from '../sample-fruits';
 import Fish from './Fish';
 import Fruit from './Fruit';
 import base from '../base';
+import Tabs from './Tabs';
+
 
 class App extends React.Component{
 	static propTypes = {
@@ -56,7 +58,6 @@ class App extends React.Component{
 			fishes: fishes
 		});
 		//or ES6 this.setState({fishes});
-		console.log(this.state);
 
 	};
 
@@ -109,28 +110,38 @@ class App extends React.Component{
 			<div className="catch-of-the-day">
 				<div className="menu">
 					<Header 
-						tagline="Fresh Seafood Market"
+						tagline="Fresh Food Market"
 					/>
-					<ul className="fishes">
-						{Object.keys(this.state.fishes)
-							.map(key => 
-								<Fish 
-									key={key} 
-									details={this.state.fishes[key]} 
-									addToOrder={this.addToOrder}
-									index={key}
-								/>)
-						}
-						{Object.keys(this.state.fruits)
-							.map(key => 
-								<Fruit 
-									key={key} 
-									details={this.state.fruits[key]} 
-									addToOrder={this.addToOrder}
-									index={key}
-								/>)
-						}
-					</ul>
+					<Tabs>
+						<div label="Fish">
+							<ul className="fishes">
+							{Object.keys(this.state.fishes)
+								.map(key => 
+									<Fish 
+										key={key} 
+										details={this.state.fishes[key]} 
+										addToOrder={this.addToOrder}
+										index={key}
+									/>)
+							}
+							</ul>
+						</div>
+						<div label="Fruit">
+							<ul className="fishes">
+							{Object.keys(this.state.fruits)
+								.map(key => 
+									<Fruit 
+										key={key} 
+										details={this.state.fruits[key]} 
+										addToOrder={this.addToOrder}
+										index={key}
+									/>)
+								}
+							</ul>
+						</div>
+					</Tabs>
+					
+					
 				</div>
 				<Order 
 					fishes = {this.state.fishes} 

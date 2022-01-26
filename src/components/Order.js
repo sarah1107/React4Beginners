@@ -85,7 +85,7 @@ class Order extends React.Component{
 		const orderIds = Object.keys(this.props.order);
 		const orderFishIds = Object.keys(this.props.order).filter(item => item.includes("fish"));
 		const orderFruitIds = Object.keys(this.props.order).filter(item => item.includes("fruit"));
-		const total = orderIds.reduce((prev, key) => {
+		const totalFish = orderFishIds.reduce((prev, key) => {
 			const fish = this.props.fishes[key];
 			const count = this.props.order[key];
 			const isAvailable = fish && fish.status === "available"
@@ -93,12 +93,24 @@ class Order extends React.Component{
 				return (prev + count * fish.price)
 			}
 			return prev;
-		}, 0)
+		}, 0);
+		const totalFruit = orderFruitIds.reduce((prev, key) => {
+			const fruit = this.props.fruits[key];
+			const count = this.props.order[key];
+			const isAvailable = fruit && fruit.status === "available"
+			if(isAvailable){
+				return (prev + count * fruit.price)
+			}
+			return prev;
+		}, 0); 
+		const total = totalFish + totalFruit;
 		return (
 			<div className="order-wrap">
 				<h2>Order</h2>
 				<TransitionGroup component="ul" className="order">
+					<h4>Fish</h4>
 					{orderFishIds.map(key => this.renderFishOrder(key))}
+					<h4>Fruit</h4>
 					{orderFruitIds.map(key => this.renderFruitOrder(key))}
 				</TransitionGroup>
 				Total : <strong>{formatPrice(total)}</strong>
