@@ -5,7 +5,9 @@ import Header from './Header';
 import Inventory from './Inventory';
 import Order from './Order';
 import sampleFishes from '../sample-fishes';
+import sampleFruits from '../sample-fruits';
 import Fish from './Fish';
+import Fruit from './Fruit';
 import base from '../base';
 
 class App extends React.Component{
@@ -14,6 +16,7 @@ class App extends React.Component{
 	};
 	state = {
 		fishes: {},
+		fruits:{},
 		order: {}
 	};
 
@@ -27,6 +30,10 @@ class App extends React.Component{
 		this.ref = base.syncState(`${storeId}/fishes`, {
 			context: this,
 			state: 'fishes'
+		});
+		this.ref = base.syncState(`${storeId}/fruits`, {
+			context: this,
+			state: 'fruits'
 		});
 	}
 
@@ -93,6 +100,10 @@ class App extends React.Component{
 		this.setState({fishes : sampleFishes});
 	}
 
+	loadSampleFruits = () => {
+		this.setState({fruits : sampleFruits});
+	}
+
 	render(){
 		return (
 			<div className="catch-of-the-day">
@@ -110,11 +121,20 @@ class App extends React.Component{
 									index={key}
 								/>)
 						}
-						<Fish />
+						{Object.keys(this.state.fruits)
+							.map(key => 
+								<Fruit 
+									key={key} 
+									details={this.state.fruits[key]} 
+									addToOrder={this.addToOrder}
+									index={key}
+								/>)
+						}
 					</ul>
 				</div>
 				<Order 
 					fishes = {this.state.fishes} 
+					fruits = {this.state.fruits} 
 					order = {this.state.order}
 					removeFromOrder = {this.removeFromOrder}/>
 				<Inventory 
@@ -123,6 +143,7 @@ class App extends React.Component{
 					updateFish={this.updateFish}
 					deleteFish={this.deleteFish}
 					loadSampleFishes = {this.loadSampleFishes}
+					loadSampleFruits = {this.loadSampleFruits}
 					storeId = {this.props.match.params.storeId}/>
 			</div>
 			);

@@ -7,10 +7,11 @@ import { TransitionGroup, CSSTransition} from 'react-transition-group';
 class Order extends React.Component{
 	static propTypes = {
 		fishes: PropTypes.object,
+		fruits: PropTypes.object,
 		order: PropTypes.object,
 		removeFromOrder: PropTypes.func
 	}
-	renderOrder = (key) => {		
+	renderFishOrder = (key) => {		
 		const fish = this.props.fishes[key];
 		const count = this.props.order[key];
 		const isAvailable = fish && fish.status === "available"
@@ -45,8 +46,45 @@ class Order extends React.Component{
 			</CSSTransition>)		
 	}
 
+	renderFruitOrder = (key) => {		
+		const fruit = this.props.fruits[key];
+		const count = this.props.order[key];
+		const isAvailable = fruit && fruit.status === "available"
+		const transitionOptions = {
+			 classNames:"order",
+			 key,
+			 timeout:{enter: 500, exit: 500}
+		};
+		if(!fruit) return null; //Make sure fruit is reinstatedts
+		if(!isAvailable){
+			return (<CSSTransition {...transitionOptions}>
+				<li key={key}>
+					Sorry, {fruit ? fruit.name : 'This fruit'} is no longer available
+				</li>
+			</CSSTransition>)		
+		}
+		return (<CSSTransition {...transitionOptions}>
+			<li key={key}>
+				<span>
+				<TransitionGroup component="span" className="count">
+					<CSSTransition 
+						classNames="count" 
+						key={count}
+						timeout={{enter: 500, exit: 500}}>
+						<span>{count} </span>
+					</CSSTransition>
+				</TransitionGroup>	
+					lbs x {fruit.name} : {formatPrice(count*fruit.price)}
+					<button onClick={() => this.props.removeFromOrder(key)}>x</button>
+				</span>
+			</li>
+			</CSSTransition>)
+	}
+
 	render(){
 		const orderIds = Object.keys(this.props.order);
+		const orderFishIds = Object.keys(this.props.order).filter(item => item.includes("fish"));
+		const orderFruitIds = Object.keys(this.props.order).filter(item => item.includes("fruit"));
 		const total = orderIds.reduce((prev, key) => {
 			const fish = this.props.fishes[key];
 			const count = this.props.order[key];
@@ -60,7 +98,8 @@ class Order extends React.Component{
 			<div className="order-wrap">
 				<h2>Order</h2>
 				<TransitionGroup component="ul" className="order">
-					{orderIds.map(key => this.renderOrder(key))}
+					{orderFishIds.map(key => this.renderFishOrder(key))}
+					{orderFruitIds.map(key => this.renderFruitOrder(key))}
 				</TransitionGroup>
 				Total : <strong>{formatPrice(total)}</strong>
 			</div>

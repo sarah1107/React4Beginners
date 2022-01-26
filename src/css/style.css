@@ -473,6 +473,34 @@ ul.order li span.count span {
   width: 150px;
   margin-right: 1rem;
 }
+.menu-fruit {
+  border-bottom: 2px solid #000;
+  border-top: 1px solid #000;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  margin-bottom: 5px;
+  clear: both;
+  overflow: hidden;
+}
+.menu-fruit p {
+  margin: 0;
+  font-size: 1.8rem;
+}
+.menu-fruit .fruit-name {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menu-fruit .price {
+  font-size: 1.4rem;
+  justify-content: flex-end;
+}
+.menu-fruit img {
+  float: left;
+  width: 150px;
+  margin-right: 1rem;
+}
 button,
 input[type=submit] {
   text-transform: uppercase;

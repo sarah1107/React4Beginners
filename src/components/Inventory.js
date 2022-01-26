@@ -13,8 +13,8 @@ class Inventory extends React.Component{
 		addFish: PropTypes.func,
 		updateFish : PropTypes.func,
 		deleteFish: PropTypes.func,
-		loadSampleFishes: PropTypes.func
-
+		loadSampleFishes: PropTypes.func,
+		loadSampleFruits: PropTypes.func
 	}
 
 	state = {
@@ -93,6 +93,7 @@ class Inventory extends React.Component{
 				)}
 				<AddFishForm addFish={this.props.addFish}/>
 				<button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
+				<button onClick={this.props.loadSampleFruits}>Load Sample Fruits</button>
 			</div>
 		);
 	}
